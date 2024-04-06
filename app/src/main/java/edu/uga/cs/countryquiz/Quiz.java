@@ -10,11 +10,11 @@ public class Quiz {
         questionsAnswered = 0;
         questions = new Question[6];
         Random gen = new Random();
-        questions[0] = new Question(context, gen.nextInt());
+        questions[0] = new Question(context);
         for (int count = 1; count < 6; count++) {
             boolean repeat;
             do {
-                questions[count] = new Question(context, gen.nextInt());
+                questions[count] = new Question(context);
                 repeat = false;
                 int newCount = count - 1;
                 while (newCount >= 0) {

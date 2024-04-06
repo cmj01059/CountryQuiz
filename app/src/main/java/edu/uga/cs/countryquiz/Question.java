@@ -9,16 +9,18 @@ public class Question {
     private String con1;
     private String con2;
 
-    public Question(Context context, int num) {
+    public Question(Context context) {
         countriesData = new CountriesData(context);
-        country = countriesData.retrieveAllCountries().get(num);
-        String[] continents = {"Asia", "Europe", "Africa", "South America", "Oceania", "North America"};
         Random gen = new Random();
+        countriesData.open();
+        country = countriesData.retrieveAllCountries().get(gen.nextInt(195));
+        String[] continents = {"Asia", "Europe", "Africa", "South America", "Oceania", "North America"};
+
         do {
-            con1 = continents[gen.nextInt(7)];
+            con1 = continents[gen.nextInt(6)];
         } while (con1.equals(country.getContinent()));
         do {
-            con2 = continents[gen.nextInt(7)];
+            con2 = continents[gen.nextInt(6)];
         } while (con2.equals(country.getContinent()) || con2.equals(con1));
     }
 

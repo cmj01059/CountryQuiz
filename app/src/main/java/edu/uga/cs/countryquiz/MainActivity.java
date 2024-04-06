@@ -1,13 +1,16 @@
 package edu.uga.cs.countryquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -21,6 +24,7 @@ import java.io.InputStreamReader;
 public class MainActivity extends AppCompatActivity {
     CountriesData countriesData;
     final String TAG = "CountryQuiz";
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,17 @@ public class MainActivity extends AppCompatActivity {
         countriesData = new CountriesData(getBaseContext());
         countriesData.open();
         new CountryDBWriter().execute();
+        button = findViewById(R.id.button);
+        button.setEnabled(false);
+        button.setOnClickListener(new ButtonClickHandler());
+    }
+
+    class ButtonClickHandler implements View.OnClickListener {
+
+        public void onClick( View v) {
+            Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+            MainActivity.this.startActivity(intent);
+        }
     }
 
     public class CountryDBWriter extends AsyncTask<Void, String> {
@@ -56,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         protected void onPostExecute(String msg) {
             Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
+            button.setEnabled(true);
         }
     }
 }
